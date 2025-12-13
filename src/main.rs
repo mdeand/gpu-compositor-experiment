@@ -87,6 +87,11 @@ impl State {
 
     let mut encoder = self.device.create_command_encoder(&Default::default());
 
+    unsafe {
+      // TODO(mdeand): Utilize the headless vulkan renderer here.
+      encoder.as_hal_mut::<wgpu_hal::api::Vulkan, _, _>(|_api| {});
+    }
+
     {
       let _render_pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
         label: None,
